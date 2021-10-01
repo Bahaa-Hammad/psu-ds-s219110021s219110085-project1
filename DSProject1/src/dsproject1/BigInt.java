@@ -13,7 +13,7 @@ public class BigInt {
     //Constructions
 
     public BigInt(){
-        DNode<Integer> tmp = new DNode<>(0);
+        DNode tmp = new DNode(0);
     }
 
     public BigInt(String num){
@@ -42,7 +42,7 @@ public class BigInt {
 
         // if there is a remainder digits, it will be stored in a node, with different block size.
         if (remainderBlocks != 0){
-            representation.insertAtTail(num);
+            representation.insertAtTail(Integer.parseInt(num));
         }
     }
 

@@ -1,37 +1,37 @@
 package dsproject1;
 
-public class DNode <T>{
-     T value; // Object instance
-     DNode<T> next; // Address for the next node in DLL
-     DNode<T> prev; // Address for the previous node in DLL (Only in DLL)
+public class DNode {
+     int value; // Object instance
+     DNode next; // Address for the next node in DLL
+     DNode prev; // Address for the previous node in DLL (Only in DLL)
 
     //constructors:
-    public DNode(T value){
+    public DNode(int value){
         this.value = value;
     }
 
     //Getters & Setters:
-    public T getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(T value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
-    public DNode<T> getNext() {
+    public DNode getNext() {
         return next;
     }
 
-    public void setNext(DNode<T> next) {
+    public void setNext(DNode next) {
         this.next = next;
     }
 
-    public DNode<T> getPrev() {
+    public DNode getPrev() {
         return prev;
     }
 
-    public void setPrev(DNode<T> prev) {
+    public void setPrev(DNode prev) {
         this.prev = prev;
     }
 }

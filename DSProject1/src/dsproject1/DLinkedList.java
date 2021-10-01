@@ -1,9 +1,9 @@
 package dsproject1;
 
-public class DLinkedList <T> {
+public class DLinkedList {
     //Attributes of DLL:
-     DNode<T> head;
-     DNode<T> tail;
+     DNode head;
+     DNode tail;
     int size;
 
     // Methods From Week 3 Slides \\
@@ -18,8 +18,8 @@ public class DLinkedList <T> {
      */
 
     //Insert at head:
-    public void insertAtHead(T val){
-        DNode<T> tmp = new DNode(val);
+    public void insertAtHead(int val){
+        DNode tmp = new DNode(val);
         tmp.setNext(head);
         tmp.setPrev(null);
 
@@ -37,8 +37,8 @@ public class DLinkedList <T> {
     }
 
     // Insert At Tail:
-    public void insertAtTail(T val){
-        DNode<T> tmp = new DNode(val);
+    public void insertAtTail(int val){
+        DNode tmp = new DNode(val);
         tmp.setNext(null);
         tmp.setPrev(tail);
 
@@ -57,7 +57,7 @@ public class DLinkedList <T> {
     }
 
     //Insert at position i (between node i-1 and i):
-    public void insertAtPos(T val, int pos){
+    public void insertAtPos(int val, int pos){
         //Check Range:
         if (pos < size || pos > size-1){
             throw new IndexOutOfBoundsException("Invalid Index: " + pos);
@@ -74,14 +74,14 @@ public class DLinkedList <T> {
         }
 
         // tmp node:
-        DNode<T> tmp = new DNode<>(val);
+        DNode tmp = new DNode(val);
 
         //Find the node i by traversing the list starting from head:
         DNode before = head;
         for (int i = 0; i < pos - 1; i++) { // pos - 1 will arrive at the node before pos
             before = before.getNext();
         }
-        DNode<T> after = before.getNext(); // the node after the pos, for simplification.
+        DNode after = before.getNext(); // the node after the pos, for simplification.
 
         /*
             Current visualization of the process:
@@ -110,12 +110,12 @@ public class DLinkedList <T> {
      */
 
     // Delete Head:
-    public T deleteHead(){
-        T val = head.getValue(); // To return the value for the user.
+    public int deleteHead(){
+        int val = head.getValue(); // To return the value for the user.
 
         //Edge Case: Empty List (BEFORE we delete the head)
         if (size == 0){
-            return null;
+            throw new NullPointerException("List is empty");
         }
         head = head.getNext();
         size--; // Must Decrement immediately after setting the new head(Critical for the next Edge Case).
@@ -132,12 +132,12 @@ public class DLinkedList <T> {
 
     // Delete Tail:
 
-    public T deleteTail(){ // Much faster than SLL
-        T val = tail.getValue(); // To return the value for the user.
+    public int deleteTail(){ // Much faster than SLL
+        int val = tail.getValue(); // To return the value for the user.
 
         //Edge Case: Empty list (BEFORE the tail is deleted).
         if (size == 0){
-            return null;
+            throw new NullPointerException("List is empty");
         }
         tail = tail.getPrev();
         size --; // Must Decrement immediately after setting the new tail,(Critical for the next Edge Case).
@@ -155,15 +155,15 @@ public class DLinkedList <T> {
 
     // Delete node i:
 
-    public T deletePos(int pos){
+    public int deletePos(int pos){
         // Check range:
         if (pos < size || pos > size-1){
             throw new IndexOutOfBoundsException("Invalid Pos: " + pos);
         }
         // To delete a node at i: we need three nodes:
-        DNode<T> before = head; // Used to traverse the list until (pos - 1) = (previous node).
-        DNode<T> current = null; // Used to store the node needed to be deleted.
-        DNode<T> after = null; // The node after the node that is needed to be deleted.
+        DNode before = head; // Used to traverse the list until (pos - 1) = (previous node).
+        DNode current = null; // Used to store the node needed to be deleted.
+        DNode after = null; // The node after the node that is needed to be deleted.
 
         //Traverse the list:
         for (int i = 0; i < pos - 1 ; i++) {
@@ -173,7 +173,7 @@ public class DLinkedList <T> {
         current = before.getNext();
         after = before.getNext();
 
-        T val = current.getValue(); // To return it to the user.
+        int val = current.getValue(); // To return it to the user.
 
         // Change References:
         before.setNext(after);
@@ -189,7 +189,7 @@ public class DLinkedList <T> {
         System.out.println("List Tail: " + tail.getValue());
         System.out.println("List size: " + this.size);
         System.out.println("=======================");
-        DNode<T> current = head;
+        DNode current = head;
         for (int i = 0; i < size-1; i++) {
             System.out.print(current.getValue());
             current = current.getNext();
@@ -317,8 +317,8 @@ public class DLinkedList <T> {
             Finally: swap between head and tail (When swapping two variables, a tmp variable is needed).
          */
 
-        DNode<T> current = head;
-        DNode<T> tmp = null;
+        DNode current = head;
+        DNode tmp = null;
 
         while (current != null){
             // Swap between prev & next
@@ -336,10 +336,10 @@ public class DLinkedList <T> {
         tail = tmp;
     }
     public String printBigInt(){
-        DNode<T> current = head;
-        String total = " ";
+        DNode current = head;
+        String total = "";
         for (int i = 0; i < size; i++) {
-           total.concat((String) current.getValue());
+           total = total.concat((Integer.toString(current.getValue())));
             current = current.getNext();
         }
        return total;
