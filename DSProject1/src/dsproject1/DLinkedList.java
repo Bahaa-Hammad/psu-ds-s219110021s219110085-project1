@@ -191,10 +191,10 @@ public class DLinkedList <T> {
         System.out.println("=======================");
         DNode<T> current = head;
         for (int i = 0; i < size-1; i++) {
-            System.out.print(current.getValue() + "==>");   // ==: Doubly
+            System.out.print(current.getValue());
             current = current.getNext();
         }
-        System.out.println(tail.getValue() + "==>Null");
+        System.out.println(tail.getValue());
     }
 
 
@@ -335,4 +335,14 @@ public class DLinkedList <T> {
         head = tail;
         tail = tmp;
     }
+    public String printBigInt(){
+        DNode<T> current = head;
+        String total = " ";
+        for (int i = 0; i < size; i++) {
+           total.concat((String) current.getValue());
+            current = current.getNext();
+        }
+       return total;
+    }
+
 }
