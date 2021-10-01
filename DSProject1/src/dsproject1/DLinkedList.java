@@ -2,8 +2,8 @@ package dsproject1;
 
 public class DLinkedList <T> {
     //Attributes of DLL:
-    private DNode<T> head;
-    private DNode<T> tail;
+     DNode<T> head;
+     DNode<T> tail;
     int size;
 
     // Methods From Week 3 Slides \\
@@ -111,7 +111,7 @@ public class DLinkedList <T> {
 
     // Delete Head:
     public T deleteHead(){
-        T val = head.getItem(); // To return the value for the user.
+        T val = head.getValue(); // To return the value for the user.
 
         //Edge Case: Empty List (BEFORE we delete the head)
         if (size == 0){
@@ -133,7 +133,7 @@ public class DLinkedList <T> {
     // Delete Tail:
 
     public T deleteTail(){ // Much faster than SLL
-        T val = tail.getItem(); // To return the value for the user.
+        T val = tail.getValue(); // To return the value for the user.
 
         //Edge Case: Empty list (BEFORE the tail is deleted).
         if (size == 0){
@@ -173,7 +173,7 @@ public class DLinkedList <T> {
         current = before.getNext();
         after = before.getNext();
 
-        T val = current.getItem(); // To return it to the user.
+        T val = current.getValue(); // To return it to the user.
 
         // Change References:
         before.setNext(after);
@@ -185,16 +185,16 @@ public class DLinkedList <T> {
 
     // Printing DLL:
     public void printList(){
-        System.out.println("List Head: "+head.getItem()); // head is the node, We want to print the object instance inside the node (item)
-        System.out.println("List Tail: " + tail.getItem());
+        System.out.println("List Head: "+head.getValue()); // head is the node, We want to print the object instance inside the node (item)
+        System.out.println("List Tail: " + tail.getValue());
         System.out.println("List size: " + this.size);
         System.out.println("=======================");
         DNode<T> current = head;
         for (int i = 0; i < size-1; i++) {
-            System.out.print(current.getItem() + "==>");   // ==: Doubly
+            System.out.print(current.getValue() + "==>");   // ==: Doubly
             current = current.getNext();
         }
-        System.out.println(tail.getItem() + "==>Null");
+        System.out.println(tail.getValue() + "==>Null");
     }
 
 
@@ -220,7 +220,7 @@ public class DLinkedList <T> {
         int size2 = 0;
 
         while(list1 != null && list2 != null){
-            if(list1.getItem() != list2.getItem()){
+            if(list1.getValue() != list2.getValue()){
                 return false;
             }
             list1 = list1.getNext();
@@ -241,7 +241,7 @@ public class DLinkedList <T> {
 
         int sum = 0;
         for (int i = 0; i < k; i++) {
-            sum = sum + (int) tmp.getItem();
+            sum = sum + (int) tmp.getValue();
             tmp = tmp.getPrev();
         }
 
@@ -258,7 +258,7 @@ public class DLinkedList <T> {
         DNode current = head;
 
         while(current != null){
-            if( (int) current.getItem() == search_for ){
+            if( (int) current.getValue() == search_for ){
                 counter++;
             }
             current = current.getNext();
