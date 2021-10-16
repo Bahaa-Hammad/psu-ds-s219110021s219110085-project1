@@ -1,6 +1,5 @@
 
 package dsproject1;
-
 // Wrapper Class
 public class BigInt {
 
@@ -33,17 +32,48 @@ public class BigInt {
 
         int loop = (num.length())/(blockSize); // The number of blocks that the string will be cut into.
         int remainderBlocks = num.length() % blockSize; // Number of blocks that does not have the same number of digits.
-        for (int i = 0; i < loop; i++) {
+
+        for (int i = 0; i < loop -1; i++) {
             String tmp = num.substring(0,blockSize); // Split string into blocks
-            int val = Integer.parseInt(tmp); // Converting string to a numerical value
+             int val = Integer.parseInt(tmp); // Converting string to a numerical value
             representation.insertAtTail(val);
-            num = num.substring(3); // Strings are immutable
+            num = num.substring(blockSize); // Strings are immutable
         }
 
         // if there is a remainder digits, it will be stored in a node, with different block size.
         if (remainderBlocks != 0){
             representation.insertAtTail(Integer.parseInt(num));
         }
+    }
+
+    public BigInt add(BigInt num) {
+
+        BigInt sumInt = new BigInt();
+
+        DNode current_tmp = this.representation.tail;
+        DNode num_tmp = num.representation.tail;
+
+        DLinkedList sumList = new DLinkedList();
+        sumInt.representation = sumList;
+
+        int sum = 0;
+        int carry = 0;
+
+        while (current_tmp != null || num_tmp != null) {
+            carry = (current_tmp.value + num_tmp.value) / 1000;
+            sum = (current_tmp.value + num_tmp.value) % 1000;
+            sumList.insertAtHead(sum);
+
+            if (carry != 0){
+                current_tmp = current_tmp.prev;
+                num_tmp = num_tmp.prev;
+                sum = (current_tmp.value + num_tmp.value + carry) % 1000 ;
+                sumList.insertAtHead(sum);
+            }
+            current_tmp = current_tmp.prev;
+            num_tmp = num_tmp.prev;
+        }
+        return sumInt;
     }
 
     @Override

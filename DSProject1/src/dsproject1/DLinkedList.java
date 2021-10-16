@@ -185,13 +185,13 @@ public class DLinkedList {
 
     // Printing DLL:
     public void printList(){
-        System.out.println("List Head: "+head.getValue()); // head is the node, We want to print the object instance inside the node (item)
-        System.out.println("List Tail: " + tail.getValue());
+        System.out.println("List Head: " + (head==null?null:head.value)); // head is the node, We want to print the object instance inside the node (item)
+        System.out.println("List Tail: " + (tail==null?null:tail.value));
         System.out.println("List size: " + this.size);
         System.out.println("=======================");
         DNode current = head;
         for (int i = 0; i < size-1; i++) {
-            System.out.print(current.getValue());
+            System.out.print(current.getValue() + "->");
             current = current.getNext();
         }
         System.out.println(tail.getValue());
