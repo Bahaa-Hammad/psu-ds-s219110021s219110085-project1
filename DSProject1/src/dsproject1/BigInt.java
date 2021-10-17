@@ -47,7 +47,7 @@ public class BigInt {
         }
     }
 
-    public BigInt add(BigInt num) {
+    public BigInt absAdd(BigInt num) {
 
         BigInt sumInt = new BigInt();
 
@@ -91,6 +91,43 @@ public class BigInt {
         return sumInt;
     }
 
+    public BigInt add(BigInt num){
+
+        BigInt res = new BigInt();
+        // Case One: Both Numbers are negative
+        if(!this.positive && !num.positive){ // Both BigInts are negative
+            res = absAdd(num);
+            res.positive = false;
+        }
+
+        //Case Two: Both Numbers are positive
+        if(this.positive && num.positive){
+            res = absAdd(num);
+            res.positive = true;
+        }
+
+        //Case Three: One of the numbers is negative:
+        if(!this.positive && num.positive){
+            //Check which number is bigger:
+            int c = this.compare(num);
+
+            switch (c){
+                case 1: absAdd()
+            }
+
+        }
+
+        return res;
+    }
+
+    BigInt subtract(BigInt num){
+
+    }
+
+    BigInt absSubstract(){
+
+    }
+
     @Override
     public String toString() {
         char sign;
@@ -104,4 +141,36 @@ public class BigInt {
         return "BigInt{"+ sign + representation.printBigInt() +
                 "}";
     }
+
+    public int compare(BigInt num){
+
+        if (this.representation.size > num.representation.size){
+            return 1;
+        }
+
+        if (this.representation.size < num.representation.size){
+            return -1;
+        }
+
+        // If size is the same: check each element in each node:
+
+        int length = this.representation.size;
+
+        DNode current_tmp = this.representation.head;
+        DNode num_tmp = num.representation.head;
+
+        while(current_tmp != null){
+
+            if(current_tmp.value > num_tmp.value){
+                return 1;
+            }
+            if (current_tmp.value < num_tmp.value){
+                return -1;
+            }
+            current_tmp = current_tmp.next;
+            num_tmp = num_tmp.next;
+        }
+        return 0;
+    }
+
 }
