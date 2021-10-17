@@ -1,5 +1,6 @@
 
 package dsproject1;
+
 // Wrapper Class
 public class BigInt {
 
@@ -33,16 +34,16 @@ public class BigInt {
         int loop = (num.length())/(blockSize); // The number of blocks that the string will be cut into.
         int remainderBlocks = num.length() % blockSize; // Number of blocks that does not have the same number of digits.
 
-        for (int i = 0; i < loop -1; i++) {
-            String tmp = num.substring(0,blockSize); // Split string into blocks
+        for (int i = 0; i < loop; i++) {
+            String tmp = num.substring(num.length()-3,num.length()); // Split string into blocks
              int val = Integer.parseInt(tmp); // Converting string to a numerical value
-            representation.insertAtTail(val);
-            num = num.substring(blockSize); // Strings are immutable
+            representation.insertAtHead(val);
+            num = num.substring(0,num.length()-3); // Strings are immutable
         }
 
         // if there is a remainder digits, it will be stored in a node, with different block size.
         if (remainderBlocks != 0){
-            representation.insertAtTail(Integer.parseInt(num));
+            representation.insertAtHead(Integer.parseInt(num));
         }
     }
 
@@ -59,7 +60,7 @@ public class BigInt {
         int sum = 0;
         int carry = 0;
 
-        while (current_tmp != null || num_tmp != null) {
+        while (current_tmp != null && num_tmp != null) {
             carry = (current_tmp.value + num_tmp.value) / 1000;
             sum = (current_tmp.value + num_tmp.value) % 1000;
             sumList.insertAtHead(sum);
@@ -71,6 +72,20 @@ public class BigInt {
                 sumList.insertAtHead(sum);
             }
             current_tmp = current_tmp.prev;
+            num_tmp = num_tmp.prev;
+        }
+
+        while (current_tmp != null){
+            carry = (current_tmp.value) / 1000;
+            sum = (current_tmp.value + carry) % 1000;
+            sumList.insertAtHead(sum);
+            current_tmp = current_tmp.prev;
+        }
+
+        while (num_tmp != null){
+            carry = (num_tmp.value) / 1000;
+            sum = (num_tmp.value + carry) % 1000;
+            sumList.insertAtHead(sum);
             num_tmp = num_tmp.prev;
         }
         return sumInt;
