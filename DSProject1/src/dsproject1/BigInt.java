@@ -95,30 +95,44 @@ public class BigInt {
 
         BigInt res = new BigInt();
         // Case One: Both Numbers are negative
-        if(!this.positive && !num.positive){ // Both BigInts are negative
+        if(this.positive == false && num.positive == false){ // Both BigInts are negative
             res = absAdd(num);
             res.positive = false;
         }
 
         //Case Two: Both Numbers are positive
-        if(this.positive && num.positive){
+        if(this.positive == true && num.positive == true){
             res = absAdd(num);
             res.positive = true;
         }
 
         //Case Three: One of the numbers is negative:
-        if(!this.positive && num.positive || this.positive && !num.positive){
+        if(this.positive == true && num.positive == false){
+            num.positive = true;
             //Check which number is bigger:
             int c = this.compare(num);
-
            switch (c){
                 case 1:
                     res = this.subtract(num);
-                    System.out.println("c = 1");
                     break;
                 case -1:
                     res = num.absSubtract(this);
-                    System.out.println("c = -1");
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + c);
+            }
+        }
+
+        if (this.positive == false && num.positive == true){
+            num.positive = false;
+            //Check which number is bigger:
+            int c = this.compare(num);
+            switch (c){
+                case 1:
+                    res = this.absSubtract(num);
+                    break;
+                case -1:
+                    res = num.subtract(this);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + c);
