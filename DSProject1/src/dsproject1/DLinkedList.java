@@ -194,7 +194,7 @@ public class DLinkedList {
             System.out.print(current.getValue() + "->");
             current = current.getNext();
         }
-        System.out.println(tail.getValue());
+        System.out.println(tail == null? null: tail.value);
     }
 
 

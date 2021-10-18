@@ -107,16 +107,23 @@ public class BigInt {
         }
 
         //Case Three: One of the numbers is negative:
-        if(!this.positive && num.positive){
+        if(!this.positive && num.positive || this.positive && !num.positive){
             //Check which number is bigger:
             int c = this.compare(num);
 
-            switch (c){
-                //case 1: absAdd()
+           switch (c){
+                case 1:
+                    res = this.subtract(num);
+                    System.out.println("c = 1");
+                    break;
+                case -1:
+                    res = num.absSubtract(this);
+                    System.out.println("c = -1");
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + c);
             }
-
         }
-
         return res;
     }
 
@@ -155,7 +162,7 @@ public class BigInt {
         int borrow = 0;
 
         while (current_tmp != null) {
-            subt = borrow + (current_tmp.value - (num_tmp != null? num_tmp.value : 0));
+            subt = borrow + (current_tmp.value - (num_tmp != null? num_tmp.value : 0) % 1000);
             if (subt < 0){
                 borrow = -1;
                 subt += 1000;
@@ -189,7 +196,8 @@ public class BigInt {
 
     public int compare(BigInt num){
 
-        //Check + , - :
+
+            //Check + , - :
 
         if (this.positive == true && num.positive == false){
             return 1;
@@ -227,6 +235,7 @@ public class BigInt {
             num_tmp = num_tmp.next;
         }
         return 0;
+
     }
 
 }
