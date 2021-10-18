@@ -3,7 +3,6 @@ package dsproject1;
 
 // Wrapper Class
 public class BigInt {
-
     //BigInt attributes
     boolean positive;
     final int blockSize = 3;
@@ -147,14 +146,50 @@ public class BigInt {
 
         BigInt res = new BigInt();
 
+        if (this.positive == true && num.positive == true){
+
+            if (c == 1){
+                res = this.absSubtract(num);
+                res.positive = true;
+            }
+
+            if (c == -1){
+                res = num.absSubtract(this);
+                res.positive = false;
+            }
+
+            if (c == 0){
+                res = new BigInt("0");
+            }
+            return res;
+        }
+
+        if (this.positive == false && num.positive == false){
+
+            if (c == 1){
+                res = this.absSubtract(num);
+                res.positive = false;
+            }
+
+            if (c == -1){
+                res = num.absSubtract(this);
+                res.positive = true;
+            }
+
+            if (c == 0){
+                res = new BigInt("0");
+            }
+            return res;
+        }
+
         if (c == 1){
-             res = this.absSubtract(num);
+             res = this.absAdd(num);
              res.positive = true;
         }
 
         if (c == -1){
-            res = num.absSubtract(this);
-             res.positive = false;
+            res = this.absAdd(num);
+            res.positive = false;
         }
 
         if (c == 0){
@@ -193,24 +228,7 @@ public class BigInt {
         }
         return subtInt;
     }
-
-    @Override
-    public String toString() {
-        char sign;
-        if(positive == true){
-            sign = '+';
-        }
-        else{
-            sign = '-';
-        }
-
-        return "BigInt{"+ sign + representation.printBigInt() +
-                "}";
-    }
-
     public int compare(BigInt num){
-
-
             //Check + , - :
 
         if (this.positive == true && num.positive == false){
@@ -249,7 +267,19 @@ public class BigInt {
             num_tmp = num_tmp.next;
         }
         return 0;
-
     }
 
+    @Override
+    public String toString() {
+        char sign;
+        if(positive == true){
+            sign = '+';
+        }
+        else{
+            sign = '-';
+        }
+
+        return "BigInt{"+ sign + representation.printBigInt() +
+                "}";
+    }
 }
