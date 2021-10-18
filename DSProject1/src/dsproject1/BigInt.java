@@ -112,7 +112,7 @@ public class BigInt {
             int c = this.compare(num);
 
             switch (c){
-                case 1: absAdd()
+                //case 1: absAdd()
             }
 
         }
@@ -121,11 +121,71 @@ public class BigInt {
     }
 
     BigInt subtract(BigInt num){
+        // Find the largest value:
+        int c = this.compare(num);
 
+        BigInt res = new BigInt();
+
+        if (c == 1){
+             res = this.absSubtract(num);
+             res.positive = true;
+        }
+
+        if (c == -1){
+            res = num.absSubtract(this);
+             res.positive = false;
+        }
+
+        if (c == 0){
+            res = new BigInt("0");
+        }
+        return res;
     }
 
-    BigInt absSubstract(){
+    BigInt absSubtract(BigInt num){
+        BigInt subtInt = new BigInt();
 
+        DNode current_tmp = this.representation.tail;
+        DNode num_tmp = num.representation.tail;
+
+        DLinkedList subtList = new DLinkedList();
+        subtInt.representation = subtList;
+
+        int subt = 0;
+        int borrow = 0;
+
+        while (current_tmp != null && num_tmp != null) {
+            if (current_tmp.value < num_tmp.value){
+                borrow = current_tmp.next.value;
+            }
+            borrow = (current_tmp.value - num_tmp.value) / 1000;
+            subt = (current_tmp.value - num_tmp.value) % 1000;
+            subtList.insertAtHead(subt);
+
+            if (borrow != 0){
+                current_tmp = current_tmp.prev;
+                num_tmp = num_tmp.prev;
+                subt = (current_tmp.value - num_tmp.value + borrow) % 1000 ;
+                subtList.insertAtHead(subt);
+            }
+            current_tmp = current_tmp.prev;
+            num_tmp = num_tmp.prev;
+        }
+
+        while (current_tmp != null){
+            borrow = (current_tmp.value) / 1000;
+            subt = (current_tmp.value + borrow) % 1000;
+            subtList.insertAtHead(subt);
+            current_tmp = current_tmp.prev;
+        }
+
+        while (num_tmp != null){
+            borrow = (num_tmp.value) / 1000;
+            subt = (num_tmp.value + borrow) % 1000;
+            subtList.insertAtHead(subt);
+            num_tmp = num_tmp.prev;
+        }
+        return subtInt;
     }
 
     @Override
@@ -143,6 +203,17 @@ public class BigInt {
     }
 
     public int compare(BigInt num){
+
+        //Check + , - :
+
+        if (this.positive == true && num.positive == false){
+            return 1;
+        }
+
+        if (this.positive == false && num.positive == true){
+            return -1;
+        }
+
 
         if (this.representation.size > num.representation.size){
             return 1;
