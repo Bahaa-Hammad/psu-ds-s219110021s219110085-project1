@@ -154,36 +154,21 @@ public class BigInt {
         int subt = 0;
         int borrow = 0;
 
-        while (current_tmp != null && num_tmp != null) {
-            if (current_tmp.value < num_tmp.value){
-                borrow = current_tmp.next.value;
+        while (current_tmp != null) {
+            subt = borrow + (current_tmp.value - (num_tmp != null? num_tmp.value : 0));
+            if (subt < 0){
+                borrow = -1;
+                subt += 1000;
             }
-            borrow = (current_tmp.value - num_tmp.value) / 1000;
-            subt = (current_tmp.value - num_tmp.value) % 1000;
+            else {
+                borrow = 0;
+            }
             subtList.insertAtHead(subt);
 
-            if (borrow != 0){
-                current_tmp = current_tmp.prev;
+            current_tmp = current_tmp.prev;
+            if (num_tmp != null){
                 num_tmp = num_tmp.prev;
-                subt = (current_tmp.value - num_tmp.value + borrow) % 1000 ;
-                subtList.insertAtHead(subt);
             }
-            current_tmp = current_tmp.prev;
-            num_tmp = num_tmp.prev;
-        }
-
-        while (current_tmp != null){
-            borrow = (current_tmp.value) / 1000;
-            subt = (current_tmp.value + borrow) % 1000;
-            subtList.insertAtHead(subt);
-            current_tmp = current_tmp.prev;
-        }
-
-        while (num_tmp != null){
-            borrow = (num_tmp.value) / 1000;
-            subt = (num_tmp.value + borrow) % 1000;
-            subtList.insertAtHead(subt);
-            num_tmp = num_tmp.prev;
         }
         return subtInt;
     }
