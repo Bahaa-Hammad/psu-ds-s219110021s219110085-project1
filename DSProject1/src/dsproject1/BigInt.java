@@ -226,6 +226,10 @@ public class BigInt {
                 num_tmp = num_tmp.prev;
             }
         }
+
+        if (subtList.head.value == 0){
+            subtList.deleteHead();
+        }
         return subtInt;
     }
     public int compare(BigInt num){
@@ -278,7 +282,6 @@ public class BigInt {
         else{
             sign = '-';
         }
-
         return "BigInt{"+ sign + representation.printBigInt() +
                 "}";
     }

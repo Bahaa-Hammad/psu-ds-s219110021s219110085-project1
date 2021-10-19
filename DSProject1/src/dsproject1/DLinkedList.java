@@ -4,9 +4,7 @@ public class DLinkedList {
     //Attributes of DLL:
      DNode head;
      DNode tail;
-    int size;
-
-    // Methods From Week 3 Slides \\
+     int size;
 
     //Methods:
 
@@ -197,152 +195,25 @@ public class DLinkedList {
         System.out.println(tail == null? null: tail.value);
     }
 
-
-
-    // Bahaa Practice Extra\\
-
-    public static int getCount(DNode head) {
-
-        int size = 0;
-        DNode tmp = head;
-        while(tmp != null){
-            size++;
-            tmp = tmp.getNext();
-        }
-        return size;
-    }
-
-    //Function to check whether two linked lists are identical or not.
-    public boolean isIdentical (DNode head1, DNode head2){
-        DNode list1 = head1;
-        DNode list2 = head2;
-        int size1 = 0;
-        int size2 = 0;
-
-        while(list1 != null && list2 != null){
-            if(list1.getValue() != list2.getValue()){
-                return false;
-            }
-            list1 = list1.getNext();
-            list2 = list2.getNext();
-            size1++;
-            size2++;
-        }
-
-        if(size1 != size2){
-            return false;
-        }
-        return true;
-    }
-
-    //Return the sum of last k nodes
-    public int sum(int k){
-        DNode tmp = tail;
-
-        int sum = 0;
-        for (int i = 0; i < k; i++) {
-            sum = sum + (int) tmp.getValue();
-            tmp = tmp.getPrev();
-        }
-
-        return sum;
-    }
-
-    /*
-         You don't need to read input or print anything. Complete the function count()
-         which takes the head of the link list and search_for i.e- the key as input
-         parameters and returns the count of occurrences of the given key
-    */
-    public static int count(DNode head, int search_for) {
-        int counter = 0;
-        DNode current = head;
-
-        while(current != null){
-            if( (int) current.getValue() == search_for ){
-                counter++;
-            }
-            current = current.getNext();
-        }
-        return counter;
-    }
-
-    /*
-        Given a doubly linked list, rotate the linked list counter-clockwise by P nodes.
-         Here P is a given positive integer and is smaller than the count of nodes(N) in a linked list.
-        Input:
-        2 (index of where to rotate)
-        1 2 3 4 5 6
-
-        Output:
-        3 4 5 6 1 2
-     */
-
-    public void rotateP (int p){
-
-        DNode current = head;
-        DNode tmp = null;
-
-        for(int i =0; i < p-1; i++){
-            current = current.getNext();
-        }
-        tail = current; // last element before the rotation is the tail of the list
-        tmp = current.getNext();
-        current.setNext(null);
-        current = tmp;
-        current.setPrev(null);
-
-        DNode last = current;
-        while(last.getNext() != null){
-            last = last.getNext();
-        }
-
-
-        last.setNext(head);
-        head.setPrev(null);
-        head = current;
-
-
-    }
-
-    /*
-   Question 5 (DLL):
-       Describe in detail an algorithm for reversing a doubly linked list L using only a constant amount of
-       additional space (without making a new list). Write method reverse() that reverses all contents in the
-       list.
-    */
-    public void reverse(){
-        /*
-            To reverse a DLL:
-            Each node in DLL must swap next and prev fields. (When swapping two variables, a tmp variable is needed)
-            Finally: swap between head and tail (When swapping two variables, a tmp variable is needed).
-         */
-
-        DNode current = head;
-        DNode tmp = null;
-
-        while (current != null){
-            // Swap between prev & next
-            tmp = current.getPrev();
-            current.setPrev(current.getNext());
-            current.setNext(tmp);
-
-            // Make current move to the next node in the list
-            current = current.getPrev();  //  (After Swap)current.prev = current.next (Before the swap)
-        }
-
-        // Swap between head and tail:
-        tmp = head;
-        head = tail;
-        tail = tmp;
-    }
     public String printBigInt(){
         DNode current = head;
         String total = "";
-        for (int i = 0; i < size; i++) {
-           total = total.concat((Integer.toString(current.getValue())));
-            current = current.getNext();
+        String value;
+
+        // Adding the head without checking because deleting the leading zeros would not affect the number.
+        total = total.concat((Integer.toString(current.value)));
+        current = current.next;
+
+        for (int i = 0; i < size - 1; i++) {
+             value = (Integer.toString(current.value));
+
+             // Preventing Deleting Leading Zeros in nodes:
+             if (value.length() == 2 || (value.length() == 1)){ // Adding the leading zeros
+                value = String.format("%03d", current.value);
+            }
+            total = total.concat(value);
+            current = current.next;
         }
        return total;
     }
-
 }
