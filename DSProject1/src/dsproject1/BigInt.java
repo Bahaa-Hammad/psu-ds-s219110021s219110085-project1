@@ -60,18 +60,33 @@ public class BigInt {
         int carry = 0;
 
         while (current_tmp != null && num_tmp != null) {
-            carry = (current_tmp.value + num_tmp.value) / 1000;
-            sum = (current_tmp.value + num_tmp.value) % 1000;
-            sumList.insertAtHead(sum);
 
-            if (carry != 0){
+            if (current_tmp.value + num_tmp.value == 999 && carry == 1){
+                sum = 0;
+                sumList.insertAtHead(sum);
+
                 current_tmp = current_tmp.prev;
                 num_tmp = num_tmp.prev;
-                sum = (current_tmp.value + num_tmp.value + carry) % 1000 ;
+
+                sum = (current_tmp.value + num_tmp.value + 1) % 1000;
                 sumList.insertAtHead(sum);
+            }else {
+                carry = (current_tmp.value + num_tmp.value) / 1000;
+                sum = (current_tmp.value + num_tmp.value) % 1000;
+                sumList.insertAtHead(sum);
+
+                if (carry != 0){
+                    current_tmp = current_tmp.prev;
+                    num_tmp = num_tmp.prev;
+                    sum = ((current_tmp != null? current_tmp.value: 0) + (num_tmp != null? num_tmp.value: 0) + carry) % 1000 ;    // num_tmp != null? num_tmp.value : 0
+                    sumList.insertAtHead(sum);
+                }
             }
+
             current_tmp = current_tmp.prev;
             num_tmp = num_tmp.prev;
+
+
         }
 
         while (current_tmp != null){
@@ -276,13 +291,12 @@ public class BigInt {
     @Override
     public String toString() {
         char sign;
-        if(positive == true){
-            sign = '+';
-        }
-        else{
+
+        if(positive == false){
             sign = '-';
+            return sign + representation.printBigInt();
         }
-        return "BigInt{"+ sign + representation.printBigInt() +
-                "}";
+        return representation.printBigInt();
+
     }
 }

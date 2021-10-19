@@ -2,8 +2,8 @@
 package dsproject1;
 public class DSProject1 {
     public static void main(String[] args) {
-        BigInt x = new BigInt("123456");
-        BigInt y = new BigInt("999999");
+        BigInt x = new BigInt("1000000000000");
+        BigInt y = new BigInt("1");
         BigInt z = x.subtract(y);
         z.representation.printList();
         //System.out.println(z.toString());
