@@ -56,51 +56,34 @@ public class BigInt {
         DLinkedList sumList = new DLinkedList();
         sumInt.representation = sumList;
 
-        int sum = 0;
+        int sum;
         int carry = 0;
 
         while (current_tmp != null && num_tmp != null) {
-
-            if (current_tmp.value + num_tmp.value == 999 && carry == 1){
-                sum = 0;
+                sum = (current_tmp.value + num_tmp.value + carry) % 1000;
+                carry = (current_tmp.value + num_tmp.value + carry) / 1000;
                 sumList.insertAtHead(sum);
-
                 current_tmp = current_tmp.prev;
                 num_tmp = num_tmp.prev;
-
-                sum = (current_tmp.value + num_tmp.value + 1) % 1000;
-                sumList.insertAtHead(sum);
-            }else {
-                carry = (current_tmp.value + num_tmp.value) / 1000;
-                sum = (current_tmp.value + num_tmp.value) % 1000;
-                sumList.insertAtHead(sum);
-
-                if (carry != 0){
-                    current_tmp = current_tmp.prev;
-                    num_tmp = num_tmp.prev;
-                    sum = ((current_tmp != null? current_tmp.value: 0) + (num_tmp != null? num_tmp.value: 0) + carry) % 1000 ;    // num_tmp != null? num_tmp.value : 0
-                    sumList.insertAtHead(sum);
-                }
-            }
-
-            current_tmp = current_tmp.prev;
-            num_tmp = num_tmp.prev;
-
-
         }
 
         while (current_tmp != null){
-            carry = (current_tmp.value) / 1000;
             sum = (current_tmp.value + carry) % 1000;
+            carry = (current_tmp.value + carry) / 1000;
             sumList.insertAtHead(sum);
             current_tmp = current_tmp.prev;
         }
 
         while (num_tmp != null){
-            carry = (num_tmp.value) / 1000;
             sum = (num_tmp.value + carry) % 1000;
+            carry = (current_tmp.value + carry) / 1000;
             sumList.insertAtHead(sum);
             num_tmp = num_tmp.prev;
+        }
+        // if carry != 0 -> add a block
+
+        if(carry != 0){
+            sumList.insertAtHead(carry);
         }
         return sumInt;
     }
