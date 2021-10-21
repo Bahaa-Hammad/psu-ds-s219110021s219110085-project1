@@ -46,6 +46,9 @@ public class BigInt {
         }
     }
 
+
+
+
     public BigInt absAdd(BigInt num) {
 
         BigInt sumInt = new BigInt();
@@ -88,6 +91,9 @@ public class BigInt {
         return sumInt;
     }
 
+
+
+
     public BigInt add(BigInt num){
 
         BigInt res = new BigInt();
@@ -103,7 +109,8 @@ public class BigInt {
             res.positive = true;
         }
 
-        //Case Three: One of the numbers is negative:
+        //Cases Three & four: One of the numbers is negative:
+
         if(this.positive == true && num.positive == false){
             num.positive = true;
             //Check which number is bigger:
@@ -138,12 +145,16 @@ public class BigInt {
         return res;
     }
 
+
+
+
     BigInt subtract(BigInt num){
         // Find the largest value:
         int c = this.compare(num);
 
         BigInt res = new BigInt();
 
+        //Case one: Both Numbers are Positive
         if (this.positive == true && num.positive == true){
 
             if (c == 1){
@@ -162,6 +173,7 @@ public class BigInt {
             return res;
         }
 
+        //Case two: Both Numbers are negative
         if (this.positive == false && num.positive == false){
 
             if (c == 1){
@@ -180,6 +192,8 @@ public class BigInt {
             return res;
         }
 
+
+        //Case Three: Both Numbers have different signs
         if (c == 1){
              res = this.absAdd(num);
              res.positive = true;
@@ -195,6 +209,9 @@ public class BigInt {
         }
         return res;
     }
+
+
+
 
     BigInt absSubtract(BigInt num){
         BigInt subtInt = new BigInt();
@@ -225,11 +242,14 @@ public class BigInt {
             }
         }
 
-        if (subtList.head.value == 0){
+        if (subtList.head.value == 0){ // Deleting Leading zeros at head if they exist:
             subtList.deleteHead();
         }
         return subtInt;
     }
+
+
+
     public int compare(BigInt num){
             //Check + , - :
 
@@ -251,9 +271,6 @@ public class BigInt {
         }
 
         // If size is the same: check each element in each node:
-
-        int length = this.representation.size;
-
         DNode current_tmp = this.representation.head;
         DNode num_tmp = num.representation.head;
 
@@ -270,6 +287,9 @@ public class BigInt {
         }
         return 0;
     }
+
+
+
 
     @Override
     public String toString() {
