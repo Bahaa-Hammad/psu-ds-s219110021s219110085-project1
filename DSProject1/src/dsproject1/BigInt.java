@@ -35,7 +35,7 @@ public class BigInt {
 
         for (int i = 0; i < loop; i++) {
             String tmp = num.substring(num.length()-3,num.length()); // Split string into blocks
-             int val = Integer.parseInt(tmp); // Converting string to a numerical value
+            int val = Integer.parseInt(tmp); // Converting string to a numerical value
             representation.insertAtHead(val);
             num = num.substring(0,num.length()-3); // Strings are immutable
         }
@@ -79,7 +79,7 @@ public class BigInt {
 
         while (num_tmp != null){
             sum = (num_tmp.value + carry) % 1000;
-            carry = (current_tmp.value + carry) / 1000;
+            carry = (num_tmp.value + carry) / 1000;
             sumList.insertAtHead(sum);
             num_tmp = num_tmp.prev;
         }
